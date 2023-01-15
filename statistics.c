@@ -2,6 +2,7 @@
 ** Program to compute mean, median, mode of array of floats
 ******************************************************************************/
 #include <stdio.h>
+#include <stdbool.h>
 
 #define MAXARR 20                // maximum array size
 typedef float FloatArr[MAXARR];     // define named type of float array
@@ -15,15 +16,22 @@ int sort(FloatArr *arr, int arrLen) {
         return -1;
     }
     float temp=0;
-    for (int i=0; i<arrLen-1; i++) {
-        if ((*arr)[i] > (*arr)[i+1]) {
-            temp = (*arr)[i+1];
-            (*arr)[i+1] = (*arr)[i];
-            (*arr)[i] = temp;
+    bool swapped=false;
+    for (int outer=0; outer<arrLen; outer++) {
+        swapped = false;
+        for (int i=0; i<arrLen-1; i++) {
+            if ((*arr)[i] > (*arr)[i+1]) {
+                temp = (*arr)[i+1];
+                (*arr)[i+1] = (*arr)[i];
+                (*arr)[i] = temp;
+                swapped = true;
+            }
+        }
+        if (!swapped) {
+            break;
         }
     }
-    
-    return arrLen;
+    return (arrLen);
 }
 
 /*
